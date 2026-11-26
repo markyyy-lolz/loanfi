@@ -9,7 +9,7 @@ export async function GET() {
       sql`SELECT COUNT(*)::int AS count FROM public.borrowers`,
       sql`SELECT COUNT(*)::int AS count FROM public.loans WHERE status = 'active'`,
       sql`SELECT COALESCE(SUM(outstanding_balance), 0)::numeric AS amount FROM public.loans WHERE status = 'active'`,
-      sql`SELECT COALESCE(SUM(amount), 0)::numeric AS amount FROM public.payments WHERE created_at >= date_trunc('month', CURRENT_DATE)`,
+      sql`SELECT COALESCE(SUM(amount), 0)::numeric AS amount FROM public.payments WHERE paid_at >= date_trunc('month', CURRENT_DATE)`,
       sql`SELECT id, borrower_number, first_name, last_name, phone, status, created_at FROM public.borrowers ORDER BY created_at DESC LIMIT 6`,
     ]);
     return Response.json({
